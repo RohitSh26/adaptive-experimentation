@@ -13,6 +13,7 @@ class Engine:
 
     This class is intentionally stateless and infrastructure-agnostic.
     """
+
     strategy: str = "heuristic"
 
     def compute(
@@ -32,6 +33,38 @@ class Engine:
         if constraints is None:
             constraints = Constraints()
 
-        raise NotImplementedError(
-            "Engine.compute is not implemented yet (design skeleton)."
+        # Validate inputs
+        from .guardrails import apply_guardrails
+        from .strategies.heuristic import propose_weights
+        from .validation import validate_observations, validate_previous_weights
+
+        validate_observations(observations)
+        validate_previous_weights(
+            previous_weights,
+            observations=observations,
+            epsilon=constraints.epsilon,
         )
+
+        # Propose raw weights (heuristic baseline)
+        proposed = propose_weights(observations)
+
+        # Apply guardrails
+        final_weights, guardrail_expl = apply_guardrails(
+            observations=observations,
+            previous_weights=previous_weights,
+            proposed_weights=proposed,
+            constraints=constraints,
+        )
+
+        explanation: dict[str, object] = {
+            "strategy": self.strategy,
+            "observations_summary": {
+                "num_variants": len(observations),
+                "total_trials": sum(o.trials for o in observations.values()),
+                "total_successes": sum(o.successes for o in observations.values()),
+            },
+            "proposed_weights": dict(proposed),
+        }
+        explanation.update(guardrail_expl)
+
+        return AllocationResult(weights=final_weights, explanation=explanation)
