@@ -22,6 +22,7 @@ class Engine:
         observations: Mapping[VariantId, Observation],
         previous_weights: Mapping[VariantId, float],
         constraints: Constraints | None = None,
+        seed: int | None = None,
         last_updated_at_epoch_s: int | None = None,
         now_epoch_s: int | None = None,
     ) -> AllocationResult:
@@ -35,7 +36,6 @@ class Engine:
 
         # Validate inputs
         from .guardrails import apply_guardrails
-        from .strategies.heuristic import propose_weights
         from .validation import validate_observations, validate_previous_weights
 
         validate_observations(observations)
@@ -45,8 +45,12 @@ class Engine:
             epsilon=constraints.epsilon,
         )
 
-        # Propose raw weights (heuristic baseline)
-        proposed = propose_weights(observations)
+        # Propose raw weights via selected strategy
+        from .strategies.registry import get_strategy
+
+        strategy = get_strategy(self.strategy)
+        strategy_result = strategy.propose(observations, seed=seed)
+        proposed = strategy_result.proposed_weights
 
         # Apply guardrails
         final_weights, guardrail_expl = apply_guardrails(
@@ -58,6 +62,7 @@ class Engine:
 
         explanation: dict[str, object] = {
             "strategy": self.strategy,
+            "strategy_explanation": dict(strategy_result.explanation),
             "observations_summary": {
                 "num_variants": len(observations),
                 "total_trials": sum(o.trials for o in observations.values()),
