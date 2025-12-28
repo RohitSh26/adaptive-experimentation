@@ -9,12 +9,22 @@ from .types import VariantId
 
 @dataclass(frozen=True, slots=True)
 class StrategyExplanation:
+    """
+    Strategy-specific explanation output.
+    
+    details keys vary by strategy:
+    - heuristic: {"alpha": float, "seed_used": bool, ...}
+    - thompson: {"priors": {...}, "posterior": {...}, "samples": {...}, "seed": int | None}
+    """
     name: str
     details: Mapping[str, Any]
 
 
 @dataclass(frozen=True, slots=True)
 class ObservationsSummary:
+    """
+    Summary statistics about the observations provided.
+    """
     num_variants: int
     total_trials: int
     total_successes: int
@@ -22,6 +32,9 @@ class ObservationsSummary:
 
 @dataclass(frozen=True, slots=True)
 class GuardrailExplanation:
+    """
+    Explanation of guardrail application.
+    """
     changed: bool
     hold_reason: str | None
     guardrails_applied: tuple[str, ...]
@@ -31,6 +44,9 @@ class GuardrailExplanation:
 
 @dataclass(frozen=True, slots=True)
 class AllocationExplanation:
+    """
+    Explanation of the allocation computation.
+    """
     strategy: StrategyExplanation
     observations: ObservationsSummary
     proposed_weights: Mapping[VariantId, float]
