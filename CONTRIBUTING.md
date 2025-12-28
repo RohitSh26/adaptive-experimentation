@@ -1,31 +1,37 @@
 # Contributing
 
-Thanks for your interest in contributing!
+Thanks for your interest in contributing to **adaptive-experimentation**.
 
-## Development setup (recommended)
-This repo supports VS Code Dev Containers.
+This project aims to provide a **safety-first, explainable** engine for adaptive
+traffic allocation. Contributions should preserve these core principles.
 
-1. Open the repository in VS Code
-2. Reopen in Container
-3. Run:
-   - `uv sync`
-   - `uv run ruff check .`
-   - `uv run pytest`
+## Development setup
 
-## Pull requests
-- Keep PRs small and focused
-- Add tests for new behavior
-- Ensure `ruff` and `pytest` pass
-- Prefer backward-compatible changes when possible
-
-## Code style
+This repo uses:
 - Python 3.10+
+- `uv` for dependency management
 - `ruff` for linting/formatting
-- `pytest` for tests
+- `pytest` for testing
 
-## Reporting issues
-Please include:
-- what you expected
-- what happened
-- minimal reproduction steps
-- Python version and OS
+### Clone and set up
+
+```bash
+git clone https://github.com/rohitsh26/adaptive-experimentation.git
+cd adaptive-experimentation
+uv sync
+
+
+---
+
+## Step 2 — Add `CODE_OF_CONDUCT.md` (standard, lightweight)
+
+```bash
+cat <<'EOF' > CODE_OF_CONDUCT.md
+# Code of Conduct
+
+This project follows the Contributor Covenant Code of Conduct.
+
+Be respectful and constructive. Harassment and abusive behavior are not tolerated.
+
+If you experience or witness unacceptable behavior, please open an issue or
+contact the repository owner.
