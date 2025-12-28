@@ -1,3 +1,7 @@
+![CI](https://github.com/rohitsh26/adaptive-experimentation/actions/workflows/ci.yml/badge.svg)
+![License](https://img.shields.io/github/license/rohitsh26/adaptive-experimentation)
+![Latest Release](https://img.shields.io/github/v/release/rohitsh26/adaptive-experimentation)
+
 # adaptive-experimentation
 
 A **safety-first, explainable engine** for adaptive traffic allocation using
