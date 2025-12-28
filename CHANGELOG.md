@@ -21,3 +21,7 @@ breaking changes may occur in minor versions while the API stabilizes.
   instead of a loosely-typed dict. Use `dataclasses.asdict(result.explanation)` or
   `result.explanation.to_dict()` for JSON-friendly output.
 
+## [0.1.1] - 2025-12-28
+
+### Changed
+- Added packaging metadata (keywords, classifiers) to improve discoverability.
