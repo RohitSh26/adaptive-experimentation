@@ -19,6 +19,6 @@ This repo uses:
 git clone https://github.com/rohitsh26/adaptive-experimentation.git
 cd adaptive-experimentation
 uv sync
-
+```
 
 ---
