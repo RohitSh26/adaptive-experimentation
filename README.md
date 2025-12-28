@@ -1,5 +1,5 @@
 ![CI](https://github.com/rohitsh26/adaptive-experimentation/actions/workflows/ci.yml/badge.svg)
-![License](https://img.shields.io/github/license/rohitsh26/adaptive-experimentation)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 ![Latest Release](https://img.shields.io/github/v/release/rohitsh26/adaptive-experimentation)
 
 # adaptive-experimentation
