@@ -1,7 +1,8 @@
 # Code of Conduct
 
-Be kind, be respectful, and assume good intent.
+This project follows the Contributor Covenant Code of Conduct.
 
-Harassment, discrimination, and abusive behavior are not tolerated.
+Be respectful and constructive. Harassment and abusive behavior are not tolerated.
 
-If you see a problem, please open an issue or contact the maintainer.
+If you experience or witness unacceptable behavior, please open an issue or
+contact the repository owner.
