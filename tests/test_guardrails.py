@@ -6,7 +6,8 @@ from adaptive_experimentation.validation import ValidationError
 
 
 def test_hold_when_min_trials_not_met() -> None:
-    obs = {"A": Observation(trials=10, successes=2), "B": Observation(trials=10, successes=3)}
+    obs = {"A": Observation(trials=10, successes=2),
+           "B": Observation(trials=10, successes=3)}
     prev = {"A": 0.5, "B": 0.5}
     proposed = {"A": 0.1, "B": 0.9}
     c = Constraints(min_trials=1000)

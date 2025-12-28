@@ -19,8 +19,9 @@ def test_engine_moves_toward_better_variant_when_enough_data() -> None:
     )
 
     assert result.weights["B"] > 0.5
-    assert result.explanation["strategy"] == "heuristic"
-    assert "proposed_weights" in result.explanation
+    assert result.explanation.strategy.name == "heuristic"
+    assert set(result.explanation.proposed_weights.keys()) == {"A", "B"}
+    assert abs(sum(result.explanation.proposed_weights.values()) - 1.0) < 1e-9
     assert abs(sum(result.weights.values()) - 1.0) < 1e-9
 
 
@@ -40,8 +41,8 @@ def test_engine_holds_when_min_trials_not_met() -> None:
     )
 
     assert result.weights == prev
-    assert result.explanation["changed"] is False
-    assert result.explanation["hold_reason"] == "min_trials_not_met"
+    assert result.explanation.guardrails.changed is False
+    assert result.explanation.guardrails.hold_reason == "min_trials_not_met"
 
 
 def test_engine_applies_max_step() -> None:

@@ -18,7 +18,7 @@ def test_engine_thompson_is_reproducible_with_seed() -> None:
     )
 
     assert r1.weights == r2.weights
-    assert r1.explanation["strategy"] == "thompson"
+    assert r1.explanation.strategy.name == "thompson"
 
 
 def test_engine_thompson_still_holds_under_min_trials_policy_x() -> None:
@@ -34,5 +34,5 @@ def test_engine_thompson_still_holds_under_min_trials_policy_x() -> None:
         observations=observations, previous_weights=prev, constraints=constraints, seed=1
     )
     assert r.weights == prev
-    assert r.explanation["changed"] is False
-    assert r.explanation["hold_reason"] == "min_trials_not_met"
+    assert r.explanation.guardrails.changed is False
+    assert r.explanation.guardrails.hold_reason == "min_trials_not_met"

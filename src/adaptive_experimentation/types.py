@@ -2,6 +2,10 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 from dataclasses import dataclass
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .explanations import AllocationExplanation
 
 VariantId = str
 Weights = dict[VariantId, float]
@@ -32,5 +36,5 @@ class Constraints:
 
 @dataclass(frozen=True, slots=True)
 class AllocationResult:
-    weights: Weights
-    explanation: Mapping[str, object]
+    weights: Mapping[VariantId, float]
+    explanation: AllocationExplanation
