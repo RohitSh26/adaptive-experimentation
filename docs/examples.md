@@ -33,6 +33,15 @@ This example:
 
 ---
 
+## Visualization
+
+The following chart shows how variant weights evolve across windows in the
+multi-window simulation.
+
+![Weights over time](assets/weights_over_time.png)
+
+--- 
+
 ## Interpreting results
 
 It is normal to observe:

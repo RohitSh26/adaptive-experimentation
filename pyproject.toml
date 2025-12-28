@@ -37,6 +37,12 @@ dev = [
     "ruff>=0.14.10",
 ]
 
+[project.optional-dependencies]
+viz = [
+      "matplotlib>=3.8",
+  ]
+
+
 [tool.ruff]
 line-length = 100
 target-version = "py310"

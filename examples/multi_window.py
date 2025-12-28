@@ -9,6 +9,42 @@ from dataclasses import asdict
 from adaptive_experimentation import Constraints, Engine, Observation
 
 
+def _maybe_plot(weights_csv: str, out_png: str = "weights_over_time.png") -> None:
+    """Optional: plot weights over time to a PNG if matplotlib is installed."""
+    try:
+        import matplotlib.pyplot as plt
+    except Exception:
+        print("matplotlib not installed; skipping plot.")
+        return
+
+    rows = []
+    with open(weights_csv, encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for r in reader:
+            rows.append(r)
+
+    if not rows:
+        print("No rows found; skipping plot.")
+        return
+
+    meta = {"window", "strategy", "total_trials", "total_successes"}
+    variant_cols = [c for c in rows[0].keys() if c not in meta]
+
+    x = [int(r["window"]) for r in rows]
+    for v in variant_cols:
+        y = [float(r[v]) for r in rows]
+        plt.plot(x, y, label=v)
+
+    plt.xlabel("window")
+    plt.ylabel("weight")
+    plt.title("Weights over time")
+    plt.legend(loc="best")
+    plt.tight_layout()
+    plt.savefig(out_png)
+    plt.close()
+    print(f"Wrote: {out_png}")
+
+
 def _bar(x: float, width: int = 24) -> str:
     # simple ASCII bar for weights in [0,1]
     filled = int(round(max(0.0, min(1.0, x)) * width))
@@ -33,6 +69,7 @@ def _print_window_summary(
         msg += f" | hold={hold_reason}"
     msg += " | top: " + "  ".join(parts)
     print(msg)
+
 
 def _normalize(weights: dict[str, float]) -> dict[str, float]:
     total = sum(weights.values())
@@ -125,9 +162,10 @@ def main() -> int:
     weights: dict[str, float] = {v: 1.0 / len(variants) for v in variants}
 
     # Prepare CSV output
-    with open(args.weights_csv, "w", newline="", encoding="utf-8") as f_csv, open(
-        args.explanations_jsonl, "w", encoding="utf-8"
-    ) as f_jsonl:
+    with (
+        open(args.weights_csv, "w", newline="", encoding="utf-8") as f_csv,
+        open(args.explanations_jsonl, "w", encoding="utf-8") as f_jsonl,
+    ):
         writer = csv.DictWriter(
             f_csv,
             fieldnames=["window", "strategy", "total_trials", "total_successes", *variants],
@@ -165,7 +203,6 @@ def main() -> int:
                 top_k=min(3, len(variants)),
             )
 
-
             total_trials = sum(o.trials for o in observations.values())
             total_successes = sum(o.successes for o in observations.values())
 
@@ -195,6 +232,7 @@ def main() -> int:
     print(f"Wrote: {args.weights_csv}")
     print(f"Wrote: {args.explanations_jsonl}")
     print("Tip: open the CSV to see weights converging over time.")
+    _maybe_plot(args.weights_csv)
     return 0
 
 

@@ -150,6 +150,14 @@ See the `examples/` directory:
 
 These examples simulate real operational patterns, not toy cases.
 
+### What learning looks like over time
+
+Below is a visualization from the multi-window simulation showing how traffic
+weights evolve as the system gathers more data.
+
+![Weights over time](docs/assets/weights_over_time.png)
+
+
 ---
 ### Who should use this
 
