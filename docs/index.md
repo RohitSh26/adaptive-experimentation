@@ -23,6 +23,7 @@ This library focuses on:
 
 - [Design philosophy](design-philosophy.md)
 - [End-to-end examples](examples.md)
+- [Constraints](constraints.md)
 - [GitHub repository](https://github.com/rohitsh26/adaptive-experimentation)
 
 ---

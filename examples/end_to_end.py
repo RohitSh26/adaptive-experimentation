@@ -135,8 +135,7 @@ def main() -> int:
     # Build variant ids: A, B, C, ...
     variants = tuple(chr(ord("A") + i) for i in range(args.variants))
     if args.winner not in variants:
-        raise SystemExit(
-            f"--winner must be one of {variants}, got {args.winner!r}")
+        raise SystemExit(f"--winner must be one of {variants}, got {args.winner!r}")
 
     # Start with uniform previous weights
     previous_weights = {v: 1.0 / len(variants) for v in variants}
@@ -154,11 +153,9 @@ def main() -> int:
 
     # Compute next weights
     engine = Engine(strategy=args.strategy)
-    constraints = Constraints(
-        min_trials=args.min_trials,
-        max_step=args.max_step,
-        min_weight=args.min_weight,
-    )
+
+    # using safe defaults but could also customize from args
+    constraints = Constraints.safe_defaults()
 
     result = engine.compute(
         observations=observations,
@@ -173,17 +170,14 @@ def main() -> int:
     print("\n=== Simulated window ===")
     print(f"variants: {variants}")
     print(f"impressions: {args.impressions}")
-    print(
-        f"base_ctr: {args.base_ctr:.4f} | winner: {args.winner} | lift: {args.lift:.4f}")
-    print(
-        f"total trials: {total_trials} | total successes: {total_successes}\n")
+    print(f"base_ctr: {args.base_ctr:.4f} | winner: {args.winner} | lift: {args.lift:.4f}")
+    print(f"total trials: {total_trials} | total successes: {total_successes}\n")
 
     print("Per-variant observed CTR:")
     for v in variants:
         o = observations[v]
         ctr = (o.successes / o.trials) if o.trials else 0.0
-        print(
-            f"  {v}: trials={o.trials:6d} successes={o.successes:5d} ctr={ctr:.4%}")
+        print(f"  {v}: trials={o.trials:6d} successes={o.successes:5d} ctr={ctr:.4%}")
 
     print("\n=== Allocation ===")
     print(f"strategy: {result.explanation.strategy.name}")
