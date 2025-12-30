@@ -113,6 +113,39 @@ The engine:
 
 ---
 
+### Reproducibility (Deterministic Thompson Sampling)
+
+For debugging, incident analysis, or testing, you can make Thompson Sampling deterministic
+by providing a `seed`.
+
+```python
+engine = Engine(strategy="thompson")
+
+result = engine.compute(
+    observations=observations,
+    previous_weights=previous_weights,
+    constraints=Constraints.neutral_defaults(),
+    seed=42,
+)
+```
+
+Using the same inputs and seed will always produce the same allocation.
+
+## Also mention in control loop example:
+
+```python
+run_once(
+    experiment_id="exp1",
+    window_start_epoch_s=start,
+    window_end_epoch_s=end,
+    store=store,
+    source=source,
+    seed=42,
+)
+```
+
+---
+
 ### Strategies
 #### Thompson Sampling (Beta-Bernoulli)
 
