@@ -46,6 +46,15 @@ Teams often need:
 - Replace your feature flag or experimentation platform
 - Optimize aggressively without safety constraints
 
+## What this library is not
+
+- This is not a traffic router or request-time decision system.
+- This library does not ingest raw events.
+- This library does not manage experiment lifecycles.
+
+It focuses only on the decision logic: how to safely and explainably
+update allocation weights given aggregated observations.
+
 This library focuses on **decision logic only**.
 
 ---
@@ -217,16 +226,12 @@ See the `examples/` directory:
 
 - `end_to_end.py` — single-window decision
 - `multi_window.py` — learning over time with CSV output
+- `control_loop_file.py` - Zero-infrastructure example using local JSON files, Best starting point for understanding the control loop.
+- `control_loop_http.py` - Pattern for integrating with HTTP-based config and metrics services.
+- `streaming_control_loop.py` - Simulation of a real-world streaming system where events arrive continuously and allocations are updated on fixed time windows.
+
 
 These examples simulate real operational patterns, not toy cases.
-
-### What learning looks like over time
-
-Below is a visualization from the multi-window simulation showing how traffic
-weights evolve as the system gathers more data.
-
-![Weights over time](docs/assets/weights_over_time.png)
-
 
 ---
 ### Who should use this
