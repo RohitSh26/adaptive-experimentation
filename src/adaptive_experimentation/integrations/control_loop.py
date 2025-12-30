@@ -62,6 +62,7 @@ def run_once(
     source: ObservationSource,
     strategy: str = "thompson",
     constraints: Constraints | None = None,
+    seed: int | None = None,
 ) -> ControlLoopRunResult:
     """Run one safe allocation update cycle.
 
@@ -87,6 +88,7 @@ def run_once(
         constraints=constraints or Constraints(),
         last_updated_at_epoch_s=None,
         now_epoch_s=None,
+        seed=seed,
     )
 
     tol = 1e-12
