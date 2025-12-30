@@ -7,7 +7,10 @@ from urllib.parse import parse_qs, urlparse
 # In-memory state (demo only)
 STATE = {
     "weights": {"A": 0.5, "B": 0.5},
-    "observations": {"A": {"trials": 2000, "successes": 100}, "B": {"trials": 2000, "successes": 300}},
+    "observations": {
+        "A": {"trials": 2000, "successes": 100},
+        "B": {"trials": 2000, "successes": 300},
+    },
 }
 
 
